@@ -65,7 +65,115 @@ test.describe('LogicRays Login Test Scenarios', () => {
   });
 
   // TC_005
-  test('TC_005 - Valid Email & Valid Password', async ({ page }) => {
+  test('TC_005 - Empty Email & Valid Password', async ({ page }) => {
+    await page.goto(loginUrl);
+
+    await page.getByPlaceholder('Password').fill('Test@123');
+
+    await page.locator('a:has-text("Login")').click();
+
+    await expect(page).toHaveURL(/login/);
+  });
+
+  // TC_006
+  test('TC_006 - Valid Email & Empty Password', async ({ page }) => {
+    await page.goto(loginUrl);
+
+    await page.getByPlaceholder('Email').fill('test_negative@logicrays.com');
+
+    await page.locator('a:has-text("Login")').click();
+
+    await expect(page).toHaveURL(/login/);
+  });
+
+  // TC_007
+  test('TC_007 - Invalid Email Format (missing @)', async ({ page }) => {
+    await page.goto(loginUrl);
+
+    await page.getByPlaceholder('Email').fill('ravilogicrays.com');
+    await page.getByPlaceholder('Password').fill('Test@123');
+
+    await page.locator('a:has-text("Login")').click();
+
+    await expect(page).toHaveURL(/login/);
+  });
+
+  // TC_008
+  test('TC_008 - Invalid Email Format (missing domain)', async ({ page }) => {
+    await page.goto(loginUrl);
+
+    await page.getByPlaceholder('Email').fill('ravi@');
+    await page.getByPlaceholder('Password').fill('Test@123');
+
+    await page.locator('a:has-text("Login")').click();
+
+    await expect(page).toHaveURL(/login/);
+  });
+
+  // TC_009
+  test('TC_009 - SQL Injection Attempt in Email', async ({ page }) => {
+    await page.goto(loginUrl);
+
+    await page.getByPlaceholder('Email').fill("' OR 1=1 --");
+    await page.getByPlaceholder('Password').fill('Test@123');
+
+    await page.locator('a:has-text("Login")').click();
+
+    await expect(page).toHaveURL(/login/);
+  });
+
+  // TC_010
+  test('TC_010 - XSS Attempt in Email', async ({ page }) => {
+    await page.goto(loginUrl);
+
+    await page.getByPlaceholder('Email').fill("<script>alert('xss')</script>");
+    await page.getByPlaceholder('Password').fill('Test@123');
+
+    await page.locator('a:has-text("Login")').click();
+
+    await expect(page).toHaveURL(/login/);
+  });
+
+  // TC_011
+  test('TC_011 - Extremely Long Email', async ({ page }) => {
+    await page.goto(loginUrl);
+
+    const longEmail = 'a'.repeat(256) + '@logicrays.com';
+    await page.getByPlaceholder('Email').fill(longEmail);
+    await page.getByPlaceholder('Password').fill('Test@123');
+
+    await page.locator('a:has-text("Login")').click();
+
+    await expect(page).toHaveURL(/login/);
+  });
+
+  // TC_012
+  test('TC_012 - Extremely Long Password', async ({ page }) => {
+    await page.goto(loginUrl);
+
+    await page.getByPlaceholder('Email').fill('test_negative@logicrays.com');
+    const longPassword = 'a'.repeat(256);
+    await page.getByPlaceholder('Password').fill(longPassword);
+
+    await page.locator('a:has-text("Login")').click();
+
+    await expect(page).toHaveURL(/login/);
+  });
+
+  // TC_013
+  test('TC_013 - Password with leading and trailing spaces', async ({ page }) => {
+    await page.goto(loginUrl);
+
+    await page.getByPlaceholder('Email').fill('test_negative@logicrays.com');
+    await page.getByPlaceholder('Password').fill('  Test@123  ');
+
+    await page.locator('a:has-text("Login")').click();
+
+    await expect(page).toHaveURL(/login/);
+  });
+
+  // TC_014
+  test('TC_014 - Valid Email & Valid Password', async ({ page }) => {
     await page.goto(loginUrl);
 
     await page.getByPlaceholder('Email').fill('ravi@logicrays.com');
