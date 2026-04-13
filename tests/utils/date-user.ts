@@ -16,8 +16,6 @@ export async function getRandomFirstName() {
 }
 // console.log(getRandomFirstName());
 
-// -------
-
 // Last name
 export async function getRandomLastName() {
   const letters = 'abcdefghijklmnopqrstuvwxyz';
@@ -35,8 +33,6 @@ export async function getRandomLastName() {
   return surname;
 }
 // console.log(getRandomLastName());
-
-// -------
 
 // Password
 export async function getRandomPassword() {
