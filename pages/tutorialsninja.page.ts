@@ -56,17 +56,23 @@ export class TutorialNinjaPage {
     phone: string
   ) {
 
-    await this.firstName.fill(firstName);
-    await this.lastName.fill(lastName);
-    await this.email.fill(email);
-    await this.telephone.fill(phone);
+    //await this.firstName.fill(firstName);
+    //await this.lastName.fill(lastName);
+    //await this.email.fill(email);
+    //await this.telephone.fill(phone);
+    await this.firstName.fill(firstName, { delay: 240 });
+    await this.lastName.fill(lastName, { delay: 240 });
+    await this.email.fill(email, { delay: 240 });
+    await this.telephone.fill(phone, { delay: 240 });
 
   }
 
   async fillPasswordDetails(password: string) {
 
-    await this.password.fill(password);
-    await this.confirmPassword.fill(password);
+    //await this.password.fill(password);
+    //await this.confirmPassword.fill(password);
+    await this.password.fill(password, { delay: 240 });
+    await this.confirmPassword.fill(password, { delay: 240 });
 
   }
 
@@ -95,7 +101,7 @@ export class TutorialNinjaPage {
 
 
     // Wait so you can see success page
-    await this.page.waitForTimeout(3000);
+    await this.page.waitForTimeout(8000);
 
   }
 
