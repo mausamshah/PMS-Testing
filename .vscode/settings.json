@@ -1,0 +1,6 @@
+{
+    "kiroAgent.configureMCP": "Disabled"
+}
+"terminal.integrated.env.linux": {
+  "HISTFILE": "/home/logicrays/.vscode_history"
+}
