@@ -1,49 +1,63 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 
-test('LR-PMS Feedback Form - Complete Flow', async ({ page }) => {
+import { TutorialNinjaPage }
+  from '../pages/tutorialsninja.page';
 
-  // Step 1: Open Page
-  await page.goto('https://www.logicraystracker.com/feedback-form/');
+import { registerData }
+  from '../data/tutorialsninja';
 
-  // Step 2: Wait for Page Title
-  await expect(page.locator('h2.elementor-heading-title'))
-    .toContainText('LR-PMS Bugs/Feedback Form');
+import { generateEmail }
+  from '../utils/tutorialsninja.utils';
 
-  // Step 3: Fill Basic Details
-  await page.locator('[name="your-name"]').fill('Ravi Shah');
-  await page.locator('[name="your-email"]').fill('ravi@test.com');
 
-  // Step 4: Select OS
-  await page.locator('input[name="your-os"][value="All"]').check();
+test(
+  'TC_001 Register New User Successfully',
+  async ({ page }) => {
 
-  // Step 5: Select Browser
-  await page.locator('input[name="browser[]"][value="All"]').check();
+    const register =
+      new TutorialNinjaPage(page);
 
-  // Step 6: Select Type
-  await page.locator('input[name="your-type"][value="Bug"]').check();
+    const email =
+      generateEmail();
 
-  // Step 7: Select Priority
-  await page.locator('[name="priority"]').selectOption('High');
+    // Open Page
 
-  // Step 8: Select Department
-  await page.locator('[name="departmenttype"]').selectOption('Web');
+    await register.gotoRegisterPage();
 
-  // Step 9: Fill Description
-  await page.locator('[name="your-description"]').fill(
-    'Bug: Login button not working properly.'
-  );
+    // Fill Personal Details
 
-  // Step 10: Fill Expected Behaviour
-  await page.locator('[name="expected-behaviour"]').fill(
-    'User should be redirected to dashboard after login.'
-  );
+    await register.fillPersonalDetails(
 
-  // Step 11: Upload File
-  await page.locator('input[type="file"]').setInputFiles('tests/test-data/sample.png');
+      registerData.firstName,
+      registerData.lastName,
+      email,
+      registerData.telephone
 
-  await page.locator('#recaptcha-anchor').click();
+    );
 
-  // Step 12: Click Submit
-  await page.locator('input[type="submit"]').click();
+    // Fill Password
 
-});
+    await register.fillPasswordDetails(
+      registerData.password
+    );
+
+    // Newsletter
+
+    await register.selectNewsletterNo();
+
+    // Accept Privacy
+
+    await register.acceptPrivacyPolicy();
+
+    // Submit
+
+    await register.clickContinue();
+
+    // Validation
+
+    await register.verifyRegistrationSuccess();
+    await page.waitForTimeout(3000);
+
+  }
+
+);

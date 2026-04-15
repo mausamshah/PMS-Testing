@@ -1,68 +1,86 @@
-import { test, expect } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 
-const PROD_URL = 'https://logicrays.logicraystracker.com/login';
-const STAGING_URL = 'https://webtracker.lrdevteam.com/';
+export class TutorialNinjaPage {
 
-test.describe('LogicRays Login Test Scenarios', () => {
+  constructor(private page: Page) { }
 
-  // TC_001
-  test('TC_001 - Empty Email & Password', async ({ page }) => {
-    await page.goto(STAGING_URL);
+  // URL
+  async gotoRegisterPage() {
+    await this.page.goto(
+      'https://tutorialsninja.com/demo/index.php?route=account/register'
+    );
+  }
 
-    await page.locator('a:has-text("Login")').click();
+  // Locators
 
-    await expect(page).toHaveURL(/login/);
-    await expect(page.locator('body')).toContainText(/required|invalid|error/i);
-  });
+  firstName = this.page.locator('#input-firstname');
+  lastName = this.page.locator('#input-lastname');
+  email = this.page.locator('#input-email');
+  telephone = this.page.locator('#input-telephone');
 
-  // TC_002
-  test('TC_002 - Invalid Email & Invalid Password', async ({ page }) => {
-    await page.goto(STAGING_URL);
+  password = this.page.locator('#input-password');
+  confirmPassword = this.page.locator('#input-confirm');
 
-    await page.getByPlaceholder('Email').fill('invalid@test.com');
-    await page.getByPlaceholder('Password').fill('wrong123');
+  newsletterNo =
+    this.page.locator('input[name="newsletter"][value="0"]');
 
-    await page.locator('a:has-text("Login")').click();
+  privacyPolicy =
+    this.page.locator('input[name="agree"]');
 
-    await expect(page).toHaveURL(/login/);
-  });
+  continueBtn =
+    this.page.locator('input[value="Continue"]');
 
-  // TC_003
-  test('TC_003 - Invalid Email & Valid Password', async ({ page }) => {
-    await page.goto(STAGING_URL);
+  successMessage =
+    this.page.locator(
+      'h1:has-text("Your Account Has Been Created!")'
+    );
 
-    await page.getByPlaceholder('Email').fill('invalid@test.com');
-    await page.getByPlaceholder('Password').fill('Test@123');
+  // Actions
 
-    await page.locator('a:has-text("Login")').click();
+  async fillPersonalDetails(
+    firstName: string,
+    lastName: string,
+    email: string,
+    phone: string
+  ) {
 
-    await expect(page).toHaveURL(/login/);
-  });
+    await this.firstName.fill(firstName);
+    await this.lastName.fill(lastName);
+    await this.email.fill(email);
+    await this.telephone.fill(phone);
 
-  // TC_004
-  test('TC_004 - Valid Email & Invalid Password', async ({ page }) => {
-    await page.goto(STAGING_URL);
+  }
 
-    await page.getByPlaceholder('Email').fill('ravi@logicrays.com');
-    await page.getByPlaceholder('Password').fill('wrong123');
+  async fillPasswordDetails(password: string) {
 
-    await page.locator('a:has-text("Login")').click();
+    await this.password.fill(password);
+    await this.confirmPassword.fill(password);
 
-    await expect(page).toHaveURL(/login/);
-  });
+  }
 
-  // TC_005
-  test('TC_005 - Valid Email & Valid Password', async ({ page }) => {
-    await page.goto(STAGING_URL);
+  async selectNewsletterNo() {
 
-    await page.getByPlaceholder('Email').fill('ravi@logicrays.com');
-    await page.getByPlaceholder('Password').fill('Test@123');
+    await this.newsletterNo.check();
 
-    await page.locator('a:has-text("Login")').click();
+  }
 
-    await page.waitForURL('**/dashboard');
-    await expect(page).toHaveURL(/dashboard/);
-    //await page.pause(); // 👈 browser will stop here
-  });
+  async acceptPrivacyPolicy() {
 
-});
+    await this.privacyPolicy.check();
+
+  }
+
+  async clickContinue() {
+
+    await this.continueBtn.click();
+
+  }
+
+  async verifyRegistrationSuccess() {
+
+    await expect(this.successMessage)
+      .toBeVisible();
+
+  }
+
+}
