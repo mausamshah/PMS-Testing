@@ -1,9 +1,9 @@
 export const registerData = {
 
-  firstName: 'Ravi',
-  lastName: 'Shah',
+  firstName: 'Kavi',
+  lastName: 'Patel',
 
-  telephone: '9876543210',
+  telephone: '98765432101',
 
   password: 'Test@123'
 

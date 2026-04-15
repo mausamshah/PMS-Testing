@@ -35,6 +35,18 @@ export class TutorialNinjaPage {
       'h1:has-text("Your Account Has Been Created!")'
     );
 
+  continueAfterSuccess =
+    this.page.getByRole('link', { name: 'Continue' });
+
+  // Error Locators
+  warningMessage = this.page.locator('.alert-danger');
+  firstNameError = this.page.locator('#input-firstname + .text-danger');
+  lastNameError = this.page.locator('#input-lastname + .text-danger');
+  emailError = this.page.locator('#input-email + .text-danger');
+  telephoneError = this.page.locator('#input-telephone + .text-danger');
+  passwordError = this.page.locator('#input-password + .text-danger');
+  confirmPasswordError = this.page.locator('#input-confirm + .text-danger');
+
   // Actions
 
   async fillPersonalDetails(
@@ -81,6 +93,34 @@ export class TutorialNinjaPage {
     await expect(this.successMessage)
       .toBeVisible();
 
+
+    // Wait so you can see success page
+    await this.page.waitForTimeout(3000);
+
+  }
+
+  async clickContinueAfterSuccess() {
+
+    await this.continueAfterSuccess.click();
+
+  }
+
+  // Validations for Negative Cases
+  async verifyMandatoryFieldErrors() {
+    await expect(this.warningMessage).toContainText('Warning: You must agree to the Privacy Policy!');
+    await expect(this.firstNameError).toHaveText('First Name must be between 1 and 32 characters!');
+    await expect(this.lastNameError).toHaveText('Last Name must be between 1 and 32 characters!');
+    await expect(this.emailError).toHaveText('E-Mail Address does not appear to be valid!');
+    await expect(this.telephoneError).toHaveText('Telephone must be between 3 and 32 characters!');
+    await expect(this.passwordError).toHaveText('Password must be between 4 and 20 characters!');
+  }
+
+  async verifyEmailAlreadyRegisteredError() {
+    await expect(this.warningMessage).toContainText('Warning: E-Mail Address is already registered!');
+  }
+
+  async verifyPasswordMismatchError() {
+    await expect(this.confirmPasswordError).toHaveText('Password confirmation does not match password!');
   }
 
 }
