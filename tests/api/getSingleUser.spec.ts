@@ -26,6 +26,7 @@ test('GET Single User API - Validate Response', async ({ request }) => {
 
 });
 
+//Negative Test Case
 test('GET User API - Invalid ID', async ({ request }) => {
 
     const response = await request.get(`${GET_USERS_ENDPOINT}/999999999`, {

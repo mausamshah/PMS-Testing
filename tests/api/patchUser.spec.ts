@@ -33,6 +33,7 @@ test('PATCH Update User Name - Validate Response', async ({ request }) => {
 
 });
 
+//Negative Test Case
 test('PATCH User - Invalid ID', async ({ request }) => {
 
     const response = await request.patch(`${CREATE_USER_ENDPOINT}/99999999`, {

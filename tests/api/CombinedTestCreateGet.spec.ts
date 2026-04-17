@@ -45,6 +45,7 @@ test('POST + GET User API Flow', async ({ request }) => {
 
 });
 
+//Negative Test Case
 test('GET User API - Invalid ID', async ({ request }) => {
 
     const response = await request.get(`${CREATE_USER_ENDPOINT}/999999999`, {
