@@ -37,6 +37,7 @@ test('GET Users API - Validate Response', async ({ request }) => {
 
 });
 
+//Negative Test Cases
 test('GET Users API - Unauthorized', async ({ request }) => {
 
     const response = await request.get(GET_USERS_ENDPOINT, {

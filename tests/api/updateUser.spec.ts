@@ -32,6 +32,7 @@ test('PUT Update User API - Validate Response', async ({ request }) => {
 
 });
 
+//Negative Test Case
 test('PUT User - Invalid ID', async ({ request }) => {
 
     const response = await request.put(`${CREATE_USER_ENDPOINT}/99999999`, {
