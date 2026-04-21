@@ -47,24 +47,20 @@ test('TC_001 Register New User Successfully', async ({ page }) => {
     await page.waitForTimeout(8000);
 
   }
-
 );
 
-test(
-  'TC_002 Register with Empty Fields (Mandatory Checks)',
-  async ({ page }) => {
+test('TC_002 Register with Empty Fields (Mandatory Checks)', async ({ page }) => {
+    
     const register = new TutorialNinjaPage(page);
 
     await register.gotoRegisterPage();
     await register.clickContinue();
-
     await register.verifyMandatoryFieldErrors();
   }
 );
 
-test(
-  'TC_003 Register with Mismatched Passwords',
-  async ({ page }) => {
+test('TC_003 Register with Mismatched Passwords', async ({ page }) => {
+    
     const register = new TutorialNinjaPage(page);
     const email = generateEmail();
 
@@ -90,13 +86,12 @@ test(
 );
 
 
-test(
-  'TC_004 Register with Existing Email',
-  async ({ page }) => {
+test('TC_004 Register with Existing Email', async ({ page }) => {
+    
     const register = new TutorialNinjaPage(page);
 
     await register.gotoRegisterPage();
-
+    
     await register.fillPersonalDetails(
       registerData.firstName,
       registerData.lastName,
