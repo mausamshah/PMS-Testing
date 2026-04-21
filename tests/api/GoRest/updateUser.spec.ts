@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { API_TOKEN, CREATE_USER_ENDPOINT } from '../../utils/apiConfig';
+import { API_TOKEN, CREATE_USER_ENDPOINT } from '../../../utils/apiConfig';
 
 test('PUT Update User API - Validate Response', async ({ request }) => {
 

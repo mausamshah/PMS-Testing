@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { API_TOKEN, GET_USERS_ENDPOINT } from '../../utils/apiConfig';
+import { API_TOKEN, GET_USERS_ENDPOINT } from '../../../utils/apiConfig';
 
 test('GET Single User API - Validate Response', async ({ request }) => {
 

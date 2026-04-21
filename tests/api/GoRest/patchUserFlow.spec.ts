@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { API_TOKEN, CREATE_USER_ENDPOINT } from '../../utils/apiConfig';
+import { API_TOKEN, CREATE_USER_ENDPOINT } from '../../../utils/apiConfig';
 
-test('POST → PUT → GET User Flow', async ({ request }) => {
+test('POST → PATCH → GET User Flow', async ({ request }) => {
 
     // 🔹 Step 1: Create User
     const email = `test${Date.now()}@mailinator.com`;
@@ -12,7 +12,7 @@ test('POST → PUT → GET User Flow', async ({ request }) => {
             'Content-Type': 'application/json'
         },
         data: {
-            name: 'Ravi',
+            name: 'Original Name',
             gender: 'male',
             email,
             status: 'active'
@@ -24,31 +24,27 @@ test('POST → PUT → GET User Flow', async ({ request }) => {
     const createBody = await createRes.json();
     const userId = createBody.id;
 
-    console.log('Created User ID:', userId);
+    console.log('User Created:', userId);
 
-    // 🔹 Step 2: Update User
-    const updatedEmail = `updated${Date.now()}@mailinator.com`;
+    // 🔹 Step 2: PATCH (update only name)
+    const updatedName = 'Updated via PATCH';
 
-    const updateRes = await request.put(`${CREATE_USER_ENDPOINT}/${userId}`, {
+    const patchRes = await request.patch(`${CREATE_USER_ENDPOINT}/${userId}`, {
         headers: {
             Authorization: `Bearer ${API_TOKEN}`,
             'Content-Type': 'application/json'
         },
         data: {
-            name: 'Updated Ravi',
-            email: updatedEmail,
-            status: 'active'
+            name: updatedName
         }
     });
 
-    expect(updateRes.status()).toBe(200);
+    expect(patchRes.status()).toBe(200);
 
-    const updateBody = await updateRes.json();
+    const patchBody = await patchRes.json();
+    expect(patchBody.name).toBe(updatedName);
 
-    expect(updateBody.name).toBe('Updated Ravi');
-    expect(updateBody.email).toBe(updatedEmail);
-
-    // 🔹 Step 3: Get Updated User
+    // 🔹 Step 3: GET and verify
     const getRes = await request.get(`${CREATE_USER_ENDPOINT}/${userId}`, {
         headers: {
             Authorization: `Bearer ${API_TOKEN}`
@@ -59,7 +55,7 @@ test('POST → PUT → GET User Flow', async ({ request }) => {
 
     const getBody = await getRes.json();
 
-    expect(getBody.name).toBe('Updated Ravi');
-    expect(getBody.email).toBe(updatedEmail);
+    expect(getBody.name).toBe(updatedName);
+    expect(getBody.email).toBe(email); // unchanged
 
 });

@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
-import { API_TOKEN, CREATE_USER_ENDPOINT } from '../../utils/apiConfig';
+import { API_TOKEN, CREATE_USER_ENDPOINT } from '../../../utils/apiConfig';
 
 test('DELETE User API - Validate Response', async ({ request }) => {
 
-    const userId = 8440980; // 👉 replace with valid ID
+    const userId = 8443966; // 👉 replace with valid ID
 
     const response = await request.delete(`${CREATE_USER_ENDPOINT}/${userId}`, {
         headers: {

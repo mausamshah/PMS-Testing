@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getHeaders } from '../../utils/apiHelper';
+import { getHeaders } from '../../../utils/apiConfig';
 
 export class UserAPI {
 

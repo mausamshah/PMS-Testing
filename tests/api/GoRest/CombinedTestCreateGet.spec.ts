@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { API_TOKEN, CREATE_USER_ENDPOINT } from '../../utils/apiConfig';
+import { API_TOKEN, CREATE_USER_ENDPOINT } from '../../../utils/apiConfig';
 
 test('POST + GET User API Flow', async ({ request }) => {
 
