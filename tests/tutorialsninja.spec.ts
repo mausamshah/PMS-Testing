@@ -109,7 +109,7 @@ test(
 
 
 test(
-  'TC_005 Register with Existing Email',
+  'TC_004 Register with Existing Email',
   async ({ page }) => {
     const register = new TutorialNinjaPage(page);
 
