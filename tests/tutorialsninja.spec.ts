@@ -1,33 +1,21 @@
 import { test, expect } from '@playwright/test';
 
-import { TutorialNinjaPage }
-  from '../pages/tutorialsninja.page';
+import { TutorialNinjaPage } from '../pages/tutorialsninja.page';
 
-import { registerData }
-  from '../data/tutorialsninja';
+import { registerData } from '../data/tutorialsninja';
 
-import { generateEmail }
-  from '../utils/tutorialsninja.utils';
+import { generateEmail } from '../utils/tutorialsninja.utils';
 
+test('TC_001 Register New User Successfully', async ({ page }) => {
 
-test(
-  'TC_001 Register New User Successfully',
-  async ({ page }) => {
-
-    const register =
-      new TutorialNinjaPage(page);
-
-    const email =
-      generateEmail();
+    const register = new TutorialNinjaPage(page);
+    const email = generateEmail();
 
     // Open Page
-
     await register.gotoRegisterPage();
 
     // Fill Personal Details
-
     await register.fillPersonalDetails(
-
       registerData.firstName,
       registerData.lastName,
       email,
@@ -36,32 +24,26 @@ test(
     );
 
     // Fill Password
-
     await register.fillPasswordDetails(
       registerData.password
     );
 
     // Newsletter
-
     await register.selectNewsletterNo();
 
     // Accept Privacy
-
     await register.acceptPrivacyPolicy();
 
     // Submit
-
     await register.clickContinue();
 
     // Validation
-
     await register.verifyRegistrationSuccess();
-    // Click Continue after success
 
+    // Click Continue after success
     await register.clickContinueAfterSuccess();
 
     // Pause to view next page
-
     await page.waitForTimeout(8000);
 
   }
