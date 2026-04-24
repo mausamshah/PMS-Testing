@@ -3,7 +3,7 @@ import { API_TOKEN, CREATE_USER_ENDPOINT } from '../../../utils/apiConfig';
 
 test('PUT Update User API - Validate Response', async ({ request }) => {
 
-    const userId = 8440468; // 👉 replace with real ID
+    const userId = 8448066; // 👉 replace with real ID
 
     const updatedData = {
         name: 'jimgxttt90ykaf',

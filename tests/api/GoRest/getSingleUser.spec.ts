@@ -3,7 +3,7 @@ import { API_TOKEN, GET_USERS_ENDPOINT } from '../../../utils/apiConfig';
 
 test('GET Single User API - Validate Response', async ({ request }) => {
 
-    const userId = 8440436; // 👉 Replace with real ID
+    const userId = 8448066; // 👉 Replace with real ID
 
     const response = await request.get(`${GET_USERS_ENDPOINT}/${userId}`, {
         headers: {
